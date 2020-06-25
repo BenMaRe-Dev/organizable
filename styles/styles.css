@@ -26,13 +26,13 @@ a {
 .content {
   display: flex;
 }
-.navbar {
+.sidebar {
   min-width: 200px;
 }
 .navElement:hover {
   background-color: #e4f0f6;
 }
-.navElement:hover .navbar_link {
+.navElement:hover .sidebar_link {
   color: #0079bf;
 }
 .action {
@@ -42,7 +42,7 @@ a {
   margin: 8px 0px;
   border-radius: 5px;
 }
-.navbar_link {
+.sidebar_link {
   vertical-align: middle;
   display: flex;
   height: 32px;
