@@ -21,7 +21,7 @@ async function getBoards() {
   boards.forEach(({ id, name, closed, color, starred }) => {
     if (starred) {
       document.querySelector(".star").innerHTML += `
-      <div class="boardItem starredOnes" style="background-color: ${color};">
+      <div class="boardItem starredOnes" style="background-color: ${colorpicker(color)};">
         <h5>${name}</h5>
         <div class="boardItem_options">
           <div class="action">
@@ -36,7 +36,7 @@ async function getBoards() {
   boards.forEach(({ id, name, closed, color, starred }) => {
     if (!starred) {
       document.querySelector(".board_list").innerHTML += `
-      <div class="boardItem unstarred" style="background-color: ${color};">
+      <div class="boardItem unstarred" style="background-color: ${colorpicker(color)};">
         <h5>${name}</h5>
         <div class="boardItem_options">
           <div class="delete action">
@@ -46,9 +46,34 @@ async function getBoards() {
             <img src="./public/assets/action_star.png" alt="" />
           </div>
         </div>
-        </div>
+        
       </div>
       `;
     }
   });
+}
+
+function colorpicker(color) {
+  switch (color) {
+    case "blue":
+      return "#0079BF";
+    case "red":
+      return "#B04632";
+    case "orange":
+      return "#D29034";
+    case "purple":
+      return "#89609E";
+    case "pink":
+      return "#CD5A90";
+    case "green":
+      return "#519839";
+    case "grey":
+      return "#838C90";
+    case "sky":
+      return "#0AAECB";
+    case "lime":
+      return "#4BBF6B";
+    default:
+      break;
+  }
 }
