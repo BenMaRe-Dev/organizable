@@ -107,6 +107,7 @@ a {
 }
 .sidebar {
   min-width: 200px;
+  margin-top: -10px;
 }
 .navElement:hover {
   background-color: #e4f0f6;
@@ -129,6 +130,7 @@ a {
   align-content: center;
   margin-left: 30px;
   color: #172b4d;
+  line-height: 32px;
 }
 .board {
   width: 100%;
