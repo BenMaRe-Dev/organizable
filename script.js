@@ -1,19 +1,34 @@
-// let signUp = document.querySelector(".sign_up_button");
-// let fecht_auth = signUp.onclick;
+// login
 
-// async function authValidation() { 
-// const response = await fetch('http//:localhost:3000/login/', {
-//   method: 'POST', 
-//   mode: 'cors',
-//   body: JSON.stringify({
-//     username : 'codeable', 
-//     password : '123456',
-//   }), 
-//   headers: {
-//     'Content-type': 'application/json', 
-//   },
-// });
-// const jsonData = await response.json(); 
-// localStorage,setItem('token', JSON.stringify(jsonData.token));
-// }
+let logIn = document.querySelector(".login_btn");
 
+async function loginValidation(username, password) { 
+  const response = await fetch('http://localhost:3000/login/', {
+    method: 'POST', 
+    body: JSON.stringify({
+      username : username, 
+      password : password,
+    }), 
+    headers: {
+      'Content-type': 'application/json', 
+      //'Authorization': `Token token="${ZxSNLpSpk8hU9NPWzGVfKK2y}"`
+    },
+  });
+
+  const userData = await response.json(); 
+  localStorage.setItem('token', JSON.stringify( userData )); 
+  window.location.href = "./my_board.html";
+};
+
+logIn.addEventListener("click", event => {
+  event.preventDefault();
+  let username = document.getElementById("username").value;
+  let password = document.getElementById("password").value;
+  loginValidation(username, password); 
+});
+
+
+
+// 2) Get boards
+// getBoards() // -> Remember to send authorization header. Use token from localStorage
+// showBoards(boards) -> Muestro los boards
