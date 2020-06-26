@@ -16,7 +16,7 @@ async function loginValidation(username, password) {
 
   const userData = await response.json(); 
   localStorage.setItem('token', JSON.stringify( userData ));
-  if (Object.values(userData)[5] == undefined) {
+  if (!userData.token) {
     alert("Username or password not valid!")
     window.location.href = "./log_in.html";
   } else {
