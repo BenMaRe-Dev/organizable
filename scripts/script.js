@@ -11,7 +11,6 @@ async function loginValidation(username, password) {
     }), 
     headers: {
       'Content-type': 'application/json', 
-      //'Authorization': `Token token="${ZxSNLpSpk8hU9NPWzGVfKK2y}"`
     },
   });
 

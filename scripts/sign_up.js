@@ -1,11 +1,6 @@
 // sign up
 let signUp = document.querySelector(".sign_up_btn")
 
-// function getToken() {
-//   const jsonData = response.json(); 
-//   return jsonData.token;
-// };
-
 async function signUpValidation(username, password, email, firstName, lastName) { 
   const response = await fetch('http://localhost:3000/users/', {
     method: 'POST', 
@@ -29,7 +24,7 @@ async function signUpValidation(username, password, email, firstName, lastName) 
   localStorage.setItem('token', JSON.stringify(
     userData
   )); 
-  // window.location.href = "./login.html";
+  window.location.href = "./login.html";
 }
 
 signUp.addEventListener("click", (event) => {
