@@ -52,14 +52,56 @@ async function getBoards() {
   });
 
   document.querySelector(".board_list").innerHTML += `
-    <div class="boardItem unstarred" id="add_new">
+    <div class="boardItem unstarred new_board_section" id="add_new">
       <h5 class="new_board">Create a new Board</h5>
     </div>
   `;
 
-  document.getElementById("add_new").addEventListener("click", () => {
-    console.log("Franco");
-  }); 
+
+  var modal = document.getElementById("myModal");
+  var btn = document.getElementById("add_new");
+  var span = document.getElementsByClassName("close")[0];
+
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  async function saveBoard(name, color) {
+    const response = await fetch('http://localhost:3000/boards', {
+      method: 'POST',
+      body: JSON.stringify({
+        "name": name,
+        "closed": false,
+        "color": color,
+        "starred": false,
+      }), 
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Token token="${jsonParsed.token}"`,
+      },
+    });
+  };
+
+  document.forms.new_board_form.onsubmit = function(event) {
+    event.preventDefault();
+    let name = this.new_board_name.value;
+    console.log(name);
+    let color = this.dataset.colorOption;
+    saveBoard(name, color); 
+    window.location.href = "./my_board.html"
+    };
+  
+  
 
   let stars = document.querySelectorAll(".boardItem .star"); 
   stars.forEach(star => star.addEventListener("click", (event) => {
@@ -102,33 +144,20 @@ async function updateBoard(id, starState) {
   window.location.href = "./my_board.html";
 }
 
-document.querySelector(".modal_overlay").innerHTML = `
-<div class="modal">
-  <div class="modal_draft_section">
-    <div class="draft_board">
-      <div class="new_board_header"><h1>ksdhdn</h1><p class="modal_close">x</p></div>
-    </div>
-    <div class="color_picker">
-      <div class="color" data-color="blue"></div>
-      <div class="color" data-color="red"></div>
-      <div class="color" data-color="orange"></div>
-      <div class="color" data-color="purple"></div>
-      <div class="color" data-color="pink"></div>
-      <div class="color" data-color="green"></div>
-      <div class="color" data-color="grey"></div>
-      <div class="color" data-color="sky"></div>
-      <div class="color" data-color="lime"></div>
-    </div>
-  </div>
-  <button class="create_board_button">Create Board</button>
-</div>
-`
 
-let palette = document.querySelectorAll(".color");
+const palette = document.querySelectorAll(".color");
 palette.forEach((color) => {
-  let colorOption = color.dataset.color;
+  const colorOption = color.dataset.color;
+  color.onclick = function() {
+    const form = document.forms.new_board_form
+    form.dataset.colorOption = colorOption;
+    form.querySelector(".draft_board").style.background = colorpicker(colorOption);
+  },
   color.style.background = colorpicker(colorOption)
 });
+
+
+
 
 
 function colorpicker(color) {
@@ -156,5 +185,4 @@ function colorpicker(color) {
   }
 };
 
-const 
 
