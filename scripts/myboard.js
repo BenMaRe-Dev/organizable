@@ -1,5 +1,6 @@
 const starContainer = document.getElementsByClassName(".star");
 const commonContainer = document.getElementsByClassName(".boards");
+let closedBoards = document.querySelector(".closedBoards");
 let starredOnes = document.querySelectorAll(".star .starredOnes");
 let token = localStorage.getItem("token");
 let tokenParsed = JSON.parse(token);
@@ -19,7 +20,7 @@ async function getBoards() {
   const boards = await response.json();
 
   boards.forEach(({ id, name, closed, color, starred }) => {
-    if (starred) {
+    if (starred && !closed) {
       document.querySelector(".star").innerHTML += `
       <div data-id="${id}" data-starred="${starred}" class="boardItem starredOnes" style="background-color: ${colorpicker(color)};">
         <h5>${name}</h5>
@@ -34,7 +35,7 @@ async function getBoards() {
   });
 
   boards.forEach(({ id, name, closed, color, starred }) => {
-    if (!starred) {
+    if (!starred && !closed) {
       document.querySelector(".board_list").innerHTML += `
       <div data-id="${id}" data-starred="${starred}" class="boardItem unstarred" style="background-color: ${colorpicker(color)};">
         <h5>${name}</h5>
@@ -156,5 +157,6 @@ function colorpicker(color) {
   }
 };
 
-const 
-
+closedBoards.addEventListener("click", (event) => {
+  window.location.href = "./closed_boards.html";
+});
