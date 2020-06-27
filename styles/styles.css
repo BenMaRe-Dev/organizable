@@ -3,6 +3,68 @@ body {
   background-color: #e5e5e5;
   margin: 0;
 }
+
+.modal_overlay {
+  opacity: 0;
+  background: rgba(63, 63, 63, 0.8);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal_overlay--active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.modal_draft_section {
+  display: flex;
+}
+
+.draft_board {
+  border-radius: 3px;
+  height: 70px;
+  width: 190px;
+  background-color: #0079bf;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.new_board_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.new_board_header h1, p{
+  font-size: 16px;
+  color: white;
+  margin: 8px;
+  font-family: "Roboto";
+}
+
+.color_picker {
+  display: grid;
+  grid-template-columns: repeat(3, 20px);
+  grid-template-rows: repeat(3, 20px);
+  gap: 5px;
+  padding-left: 12px;
+}
+
+.color_picker > .color {
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+}
+
+.create_board_button {
+  height: 32px;
+  width: 109px;
+  margin-top: 5px;
+}
+
 .navbar {
   display: flex;
   justify-content: center;
@@ -140,6 +202,7 @@ a {
   height: 25px;
   display: flex;
   color: #172b4d;
+  margin: 0px 0px 15px 25px;
 }
 .title .icon {
   margin-right: 5px;
@@ -152,7 +215,7 @@ a {
   grid-template-columns: auto auto auto;
   column-gap: 10px;
   row-gap: 10px;
-  padding: 10px;
+  margin-bottom: 40px;
 }
 .boardItem {
   background-color: gray;
