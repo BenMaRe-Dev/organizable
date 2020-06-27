@@ -82,6 +82,36 @@ async function getBoards() {
       updateBoard(id, starState);
     })
   );
+
+  let close = document.querySelectorAll(".boardItem .delete");
+  close.forEach((item) =>
+    item.addEventListener("click", (event) => {
+      let closeItem = event.target.closest(".boardItem");
+      let id = closeItem.dataset.id;
+      let closeState = closeItem.dataset.starred;
+
+      closeBoard(id, closeState);
+    })
+  );
+}
+
+// CLOSE ITEM
+
+async function closeBoard(id, closeState) {
+  console.log(closeState);
+  if (closeState == "false") {
+    const respose = await fetch(`http://localhost:3000/boards/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        closed: true,
+      }),
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Token token="${tokenParsed.token}"`,
+      },
+    });
+  }
+  window.location.href = "./my_board.html";
 }
 
 // UPDATE BOARD
