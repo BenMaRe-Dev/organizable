@@ -22,7 +22,9 @@ async function getBoards() {
   boards.forEach(({ id, name, closed, color, starred }) => {
     if (starred && !closed) {
       document.querySelector(".star").innerHTML += `
-      <div data-id="${id}" data-starred="${starred}" class="boardItem starredOnes" style="background-color: ${colorpicker(color)};">
+      <div data-id="${id}" data-starred="${starred}" class="boardItem starredOnes" style="background-color: ${colorpicker(
+        color
+      )};">
         <h5>${name}</h5>
         <div class="boardItem_options">
           <div class="star action">
@@ -34,10 +36,17 @@ async function getBoards() {
     }
   });
 
+  if (document.getElementById("star_container").innerHTML == "") {
+    document.getElementById("star_title").style.display = "none";
+    document.getElementById("star_container").style.display = "none";
+  }
+
   boards.forEach(({ id, name, closed, color, starred }) => {
     if (!starred && !closed) {
       document.querySelector(".board_list").innerHTML += `
-      <div data-id="${id}" data-starred="${starred}" class="boardItem unstarred" style="background-color: ${colorpicker(color)};">
+      <div data-id="${id}" data-starred="${starred}" class="boardItem unstarred" style="background-color: ${colorpicker(
+        color
+      )};">
         <h5>${name}</h5>
         <div class="boardItem_options">
           <div class="delete action">
@@ -60,18 +69,20 @@ async function getBoards() {
 
   document.getElementById("add_new").addEventListener("click", () => {
     console.log("Franco");
-  }); 
+  });
 
-  let stars = document.querySelectorAll(".boardItem .star"); 
-  stars.forEach(star => star.addEventListener("click", (event) => {
-    let boardItem = event.target.closest(".boardItem");
-    //console.log(boardItem)
-    let id = boardItem.dataset.id
-    let starState = boardItem.dataset.starred
-    
-    updateBoard(id, starState); 
-  }));
-};
+  let stars = document.querySelectorAll(".boardItem .star");
+  stars.forEach((star) =>
+    star.addEventListener("click", (event) => {
+      let boardItem = event.target.closest(".boardItem");
+      //console.log(boardItem)
+      let id = boardItem.dataset.id;
+      let starState = boardItem.dataset.starred;
+
+      updateBoard(id, starState);
+    })
+  );
+}
 
 // UPDATE BOARD
 
@@ -79,23 +90,23 @@ async function updateBoard(id, starState) {
   console.log(starState);
   if (starState == "true") {
     const respose = await fetch(`http://localhost:3000/boards/${id}`, {
-      method: "PATCH", 
+      method: "PATCH",
       body: JSON.stringify({
         starred: false,
       }),
       headers: {
-        'Content-type': 'application/json', 
+        "Content-type": "application/json",
         Authorization: `Token token="${tokenParsed.token}"`,
       },
     });
   } else {
     const respose = await fetch(`http://localhost:3000/boards/${id}`, {
-      method: "PATCH", 
+      method: "PATCH",
       body: JSON.stringify({
         starred: true,
       }),
       headers: {
-        'Content-type': 'application/json', 
+        "Content-type": "application/json",
         Authorization: `Token token="${tokenParsed.token}"`,
       },
     });
@@ -103,34 +114,33 @@ async function updateBoard(id, starState) {
   window.location.href = "./my_board.html";
 }
 
-document.querySelector(".modal_overlay").innerHTML = `
-<div class="modal">
-  <div class="modal_draft_section">
-    <div class="draft_board">
-      <div class="new_board_header"><h1>ksdhdn</h1><p class="modal_close">x</p></div>
-    </div>
-    <div class="color_picker">
-      <div class="color" data-color="blue"></div>
-      <div class="color" data-color="red"></div>
-      <div class="color" data-color="orange"></div>
-      <div class="color" data-color="purple"></div>
-      <div class="color" data-color="pink"></div>
-      <div class="color" data-color="green"></div>
-      <div class="color" data-color="grey"></div>
-      <div class="color" data-color="sky"></div>
-      <div class="color" data-color="lime"></div>
-    </div>
-  </div>
-  <button class="create_board_button">Create Board</button>
-</div>
-`
+// document.querySelector(".modal_overlay").innerHTML = `
+// <div class="modal">
+//   <div class="modal_draft_section">
+//     <div class="draft_board">
+//       <div class="new_board_header"><h1>ksdhdn</h1><p class="modal_close">x</p></div>
+//     </div>
+//     <div class="color_picker">
+//       <div class="color" data-color="blue"></div>
+//       <div class="color" data-color="red"></div>
+//       <div class="color" data-color="orange"></div>
+//       <div class="color" data-color="purple"></div>
+//       <div class="color" data-color="pink"></div>
+//       <div class="color" data-color="green"></div>
+//       <div class="color" data-color="grey"></div>
+//       <div class="color" data-color="sky"></div>
+//       <div class="color" data-color="lime"></div>
+//     </div>
+//   </div>
+//   <button class="create_board_button">Create Board</button>
+// </div>
+// `
 
 let palette = document.querySelectorAll(".color");
 palette.forEach((color) => {
   let colorOption = color.dataset.color;
-  color.style.background = colorpicker(colorOption)
+  color.style.background = colorpicker(colorOption);
 });
-
 
 function colorpicker(color) {
   switch (color) {
@@ -155,7 +165,7 @@ function colorpicker(color) {
     default:
       break;
   }
-};
+}
 
 closedBoards.addEventListener("click", (event) => {
   window.location.href = "./closed_boards.html";
